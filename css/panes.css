@@ -1,0 +1,11 @@
+﻿/* Generic pane rules */
+body { margin: 0 }
+.page, .row, .col { overflow: hidden; position: absolute; }
+.page { top: 0; bottom: 0; left: 0; right: 0; }
+.row { left: 0; right: 0; }
+.col { top: 0; bottom: 0; }
+.scroll-x { overflow-x: auto; }
+.scroll-y { overflow-y: auto; }
+
+/* Workaround: in landscape mode, IEMobile makes bottom toolbar overlap the page, so shorten the page by 75px to compensate */
+@media screen and (orientation:landscape) { .iemobile .page { bottom: 75px; } }
