@@ -8,7 +8,7 @@ var m = Math,
 	vendor = (/webkit/i).test(navigator.appVersion) ? 'webkit' :
 		(/firefox/i).test(navigator.userAgent) ? 'Moz' :
 		'opera' in window ? 'O' : '',
-
+        
 	// Browser capabilities
 	has3d = 'WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix(),
 	hasTouch = 'ontouchstart' in window,
