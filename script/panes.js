@@ -10,10 +10,7 @@
         transitionEndEvent = vendor === 'webkit' ? 'webkitTransitionEnd' :
                              vendor === 'O' ? 'oTransitionEnd' :
                              'transitionend',
-        isTouch = 'ontouchstart' in document.documentElement,
-        touchStartEvent = isTouch ? "touchstart" : "mousedown",
-        touchMoveEvent =  isTouch ? "touchmove"  : "mousemove", 
-        touchEndEvent =   isTouch ? "touchend" : "mouseup";
+        isTouch = 'ontouchstart' in document.documentElement;
 
     $.clickOrTouch = isTouch ? "touchstart" : "click";
 
@@ -103,7 +100,7 @@
     $.fn.slidePane = function (options) {
         return this.each(function () {
             var $this = $(this).setPanePosition(options.from, null)
-                                .setPanePosition(options.to, true);
+                               .setPanePosition(options.to, true);
         });
     };
 
@@ -143,49 +140,6 @@
         })
     }
 
-    $.fn.onCustom = function () {
-        // Todo: Support IE7 (http://stackoverflow.com/questions/5342917/custom-events-in-ie-without-using-libraries)
-        return $.fn.on.apply(this, arguments);
-    }
-
-    $.fn.fireCustom = function () {
-        // Todo: Support IE7 (http://stackoverflow.com/questions/5342917/custom-events-in-ie-without-using-libraries)
-        return $.fn.fire.apply(this, arguments);
-    }
-
-    // Delegate all touches, to detect taps
-    $.ready(function () {
-        function getTouchEventData(evt) {
-            if (evt.touches && evt.touches[0])
-                return { x: evt.touches[0].pageX, y: evt.touches[0].pageY, time: new Date() };
-            else
-                return { x: evt.pageX, y: evt.pageY, time: new Date() };
-        }
-
-        var downTouch = null;
-        $("body > *").each(function () {
-            $(this).on(touchStartEvent, function (evt) {
-                downTouch = getTouchEventData(evt);
-            });
-            $(this).on(touchMoveEvent, function (evt) {
-                downTouch = null; // Not a tap if you move
-            });
-            $(this).on(touchEndEvent, function (evt) {
-                if (downTouch) {
-                    var upTouch = getTouchEventData(evt);
-                    var duration = upTouch.time - downTouch.time;
-                    if (duration < 200) { // Max tap duration
-                        var elem = evt.target;
-                        while (elem.nodeType !== 1)
-                            elem = elem.parentNode;
-                        $(elem).fireCustom("tap", evt);
-                    }
-                }
-                downTouch = null;
-            });
-        });
-    });
-
     // Elements with class "pane-nav" and attribute "rel" cause the specified pane to be shown
     function handleDeclarativePaneNav() {
         var rel = this.getAttribute("rel");
@@ -200,5 +154,5 @@
         return false;
     }
 
-    $(document).delegateClass("pane-nav", "tap", handleDeclarativePaneNav);
+    $(document).delegateClass("pane-nav", $.clickOrTouch, handleDeclarativePaneNav);
 })(x$, window);
