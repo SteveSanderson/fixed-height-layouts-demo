@@ -3,6 +3,7 @@
 body { font-family: 'Helvetica Neue', Arial, Sans-Serif; }
 .header, .footer {
     color: #eee; background: #696f77; text-shadow: 1px 1px 1px rgba(0,0,0,0.5); padding: 0 0.5em;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#696f77), color-stop(100%,#28343b));
     background: -webkit-linear-gradient(top, #696f77 0%,#28343b 100%); background: -ms-linear-gradient(top, #696f77 0%,#28343b 100%); 
 }
 .header { font-size: 1.4em; }
