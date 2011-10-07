@@ -2,30 +2,54 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <link href="css/panes.css" rel="stylesheet" type="text/css" />
         <style type="text/css">	
             /* Specific pane configuration */
             .header.row { height: 75px; background: #333; }
-            .body.row { top: 75px; bottom: 50px; background: #000; padding: 1em; }
+            .body.row { top: 75px; bottom: 50px; }
             .footer.row { height: 50px; bottom: 0; background: #333; }
             
             body { color: White; background: #000; font-family: Segoe UI, Helvetica, Arial, Sans-Serif; }
             .header, .footer { padding: 0 1em; }
+            .content { padding: 1em }
         </style>
 
     </head>
-    <body>
-        <div class="header row">
-            <h2>My header</h2>
+    <body class="row col">
+        <div id="mainPane" class="pane">
+            <div class="header row">
+                <h2>My header - <a rel="#secondPane" data-transition="slideFrom-bottom" href="#" class="pane-nav">Swap</a></h2>
+            </div>
+            <div class="body row">
+                <div id="paneOne" class="content pane scroll-y">
+                    <div>
+                        <p>Here's a big rectangle. It's just dummy content:</p>
+                        <button class="pane-nav" data-transition="slideFrom-right" rel="#paneTwo">Switch panes</button>
+                        <div style="background: #008; height: 400px; padding: 1em">Making it tall enough to scroll</div>
+                        <p>Here's another lovely rectangle:</p>
+                        <div style="background: #080; height: 400px; padding: 1em">Making it tall enough to scroll</div>
+                    </div>
+                </div>
+                <div id="paneTwo" class="content pane scroll-y">
+                    <p>Here's the second pane</p>
+                    <button class="pane-nav" data-transition="slideFrom-left" rel="#paneOne">Switch panes</button>
+                </div>
+            </div>
+            <div class="footer row">
+                <p>My footer. Could put icons here.</p>
+            </div>
         </div>
-        <div class="body row scroll-y">
-            <p>Here's a big rectangle. It's just dummy content:</p>
-            <div style="background: #008; height: 400px; padding: 1em">Making it tall enough to scroll</div>
-            <p>Here's another lovely rectangle:</p>
-            <div style="background: #080; height: 400px; padding: 1em">Making it tall enough to scroll</div>
+        <div id="secondPane" class="pane">
+            Log in?
+            <a rel="#mainPane" data-transition="slideFrom-top" href="#" class="pane-nav">Swap</a>
         </div>
-        <div class="footer row">
-            <p>My footer. Could put icons here.</p>
-        </div>
+       
+        <script src="script/xui-2.2.0.min.js" type="text/javascript"></script>
+        <script src="script/panes.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            xui("#mainPane").showPane();
+            xui("#paneOne").showPane();
+        </script>
     </body>
 </html>

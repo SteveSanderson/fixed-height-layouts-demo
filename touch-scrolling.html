@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <link href="css/panes.css" rel="stylesheet" type="text/css" />
         <link href="css/tablet.css" rel="stylesheet" type="text/css" />
         <style type="text/css">
@@ -18,13 +19,20 @@
             <div class="header row">
                 Navigation
             </div>
-            <div class="body row scroll-y">
-                <ul class="listview">
-                    <li class="selected">One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
-                    <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
-                    <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
-                    <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
-                </ul>
+            <div class="body row">
+                <div id="firstList" class="pane scroll-y">
+                    <ul class="listview pane-nav" rel="#secondList" data-transition="slideFrom-right" onselectstart="return false">
+                        <li class="selected">One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
+                        <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
+                        <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
+                        <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
+                    </ul>
+                </div>
+                <div id="secondList" class="pane scroll-y">
+                    <ul class="listview pane-nav" rel="#firstList" data-transition="slideFrom-left">
+                        <li class="selected">One</li><li>Two</li><li>Three</li>
+                    </ul>
+                </div>
             </div>
             <div class="footer row">
                 Icons go here
@@ -63,6 +71,12 @@
         </div>
 
         <script src="script/iemobile-fix.js" type="text/javascript"></script>
+
+        <script src="script/xui-2.2.0.min.js" type="text/javascript"></script>
+        <script src="script/panes.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            xui("#firstList").showPane();
+        </script>
 
         <!-- Touch scrolling -->
         <!--[if !IE]><!-->
