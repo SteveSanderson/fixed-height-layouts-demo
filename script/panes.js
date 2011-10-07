@@ -140,6 +140,15 @@
         })
     }
 
+    $.fn.touchScroll = function (options) {
+        if (vendor === "webkit" || vendor === "Moz") {
+            this.each(function () {
+                new iScroll(this, options);
+            });
+        }
+        return this;
+    }
+
     // Create missing event shortcuts for IE version of XUI
     var shortcuts = ['click'];
     for (var i = 0; i < shortcuts.length; i++) {
