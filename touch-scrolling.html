@@ -72,7 +72,10 @@
 
         <script src="script/iemobile-fix.js" type="text/javascript"></script>
 
-        <script src="script/xui-2.2.0.min.js" type="text/javascript"></script>
+        <!-- Reference the IE-specific version of XUI for IE < 9 -->
+        <!--[if lt IE 9]><script src="script/xui-ie-2.2.0.min.js" type="text/javascript"></script><![endif]-->
+        <!--[if !(lt IE 9)]><!--><script src="script/xui-2.2.0.min.js" type="text/javascript"></script><!--<![endif]-->
+
         <script src="script/panes.js" type="text/javascript"></script>
         <script type="text/javascript">
             xui("#firstList").showPane();
@@ -82,8 +85,6 @@
             xui("#secondList li").click(function () {
                 xui("#firstList").showPane({ slideFrom: 'left' });
             });
-
-
         </script>
 
         <!-- Touch scrolling -->
@@ -96,7 +97,7 @@
 
             var yScrollers = document.getElementsByClassName("scroll-y");
             for (var i = 0; i < yScrollers.length; i++)
-                new iScroll(yScrollers[i], { hScroll: false });                
+                new iScroll(yScrollers[i], { hScroll: false });
         </script>
         <!--<![endif]-->
     </body>

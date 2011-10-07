@@ -9,10 +9,10 @@
         cssTransformPrefix = "-" + vendor.toLowerCase() + "-",
         transitionEndEvent = vendor === 'webkit' ? 'webkitTransitionEnd' :
                              vendor === 'O' ? 'oTransitionEnd' :
-                             'transitionend',
-        isTouch = 'ontouchstart' in document.documentElement;
+                             'transitionend';
 
-    $.clickOrTouch = isTouch ? "touchstart" : "click";
+    $.isTouch = 'ontouchstart' in document.documentElement;
+    $.clickOrTouch = $.isTouch ? "touchstart" : "click";
 
     function oppositeDirection(direction) {
         switch (direction) {
@@ -129,7 +129,7 @@
 
     $.fn.delegateClass = function (matchClass, eventName, handler) {
         this.on(eventName, function (evt) {
-            var elem = evt.target;
+            var elem = evt.target || evt.srcElement;
             while (elem) {
                 if ($(elem).hasClass(matchClass)) {
                     return handler.call(elem, evt);
@@ -138,6 +138,17 @@
                 elem = elem.parentNode;
             }
         })
+    }
+
+    // Create missing event shortcuts for IE version of XUI
+    var shortcuts = ['click'];
+    for (var i = 0; i < shortcuts.length; i++) {
+        var eventName = shortcuts[i];
+        if (!$.fn[eventName]) {
+            $.fn[eventName] = function (handler) {
+                return this.on(eventName, handler);
+            }
+        }
     }
 
     // Elements with class "pane-nav" and attribute "rel" cause the specified pane to be shown
