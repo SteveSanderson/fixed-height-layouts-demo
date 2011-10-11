@@ -1,3 +1,5 @@
+// (c) Microsoft Corporation
+
 (function (x$, window, undefined) {
     var $ = x$;
 
@@ -163,21 +165,8 @@
         });
     };
 
-    $.fn.delegateClass = function (matchClass, eventName, handler) {
-        this.on(eventName, function (evt) {
-            var elem = evt.target || evt.srcElement;
-            while (elem) {
-                if ($(elem).hasClass(matchClass)) {
-                    return handler.call(elem, evt);
-                }
-
-                elem = elem.parentNode;
-            }
-        })
-    }
-
     $.fn.touchScroll = function (options) {
-        if (vendor === "webkit" || vendor === "Moz") {
+        if ($.isTouch && (vendor === "webkit" || vendor === "Moz")) {
             this.each(function () {
                 new iScroll(this, options);
             });
@@ -195,20 +184,4 @@
             }
         }
     }
-
-    // Elements with class "pane-nav" and attribute "rel" cause the specified pane to be shown
-    function handleDeclarativePaneNav() {
-        var rel = this.getAttribute("rel");
-        if (rel) {
-            var transitionAttrib = this.getAttribute("data-transition"), transition = {};
-            if (transitionAttrib) {
-                var tokens = transitionAttrib.split("-");
-                transition[tokens[0]] = tokens[1];
-            }
-            $(rel).showPane(transition);
-        }
-        return false;
-    }
-
-    $(document).delegateClass("pane-nav", $.clickOrTouch, handleDeclarativePaneNav);
 })(x$, window);
