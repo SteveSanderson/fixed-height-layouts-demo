@@ -79,10 +79,10 @@
         <script type="text/javascript">
             xui("#firstList").showPane();
             xui("#firstList li").click(function () {
-                xui("#secondList").showPane({ slideFrom: 'right' });
+                xui("#secondList").showPane({ coverFrom: 'right' });
             });
             xui("#secondList li").click(function () {
-                xui("#firstList").showPane({ slideFrom: 'left' });
+                xui("#firstList").showPane({ uncoverTo: 'right' });
             });
 
             <!-- Touch scrolling -->

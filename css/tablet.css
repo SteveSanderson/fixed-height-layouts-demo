@@ -7,7 +7,7 @@ body { font-family: 'Helvetica Neue', Arial, Sans-Serif; }
     background: -webkit-linear-gradient(top, #696f77 0%,#28343b 100%); background: -ms-linear-gradient(top, #696f77 0%,#28343b 100%); 
 }
 .header { font-size: 1.4em; }
-.body { background: #ddd }
+.body, .pane { background: #ddd }
 .right.col { border-left: 1px solid black; }
 .right.col .body { padding: 0 1em; }
 .listview { padding: 0; margin: 0; font-weight: bold; color: #444; }

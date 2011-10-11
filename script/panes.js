@@ -60,7 +60,8 @@
         });
     }
 
-    $.fn.setPanePosition = function (position, transition) {
+    $.fn.setPanePosition = function (position, transition, callback) {
+        callback = callback || function () { };
         return this.each(function () {
             $this = $(this).togglePane(true);
 
@@ -78,14 +79,22 @@
                 transform[cssTransformPrefix + "transform"] = "translate(" + finalPos.left + ", " + finalPos.top + ")";
                 transform[cssTransformPrefix + "transition"] = transition ? cssTransformPrefix + "transform 250ms ease-out" : null;
 
-                if (transition && position)
-                    $this.afterNextTransition(function () { $this.togglePane(false) });
+                if (transition) {
+                    $this.afterNextTransition(function () {
+                        if (position)
+                            $this.togglePane(false)
+                        callback();
+                    });
+                }
                 $this.css(transform);
+                if (!transition)
+                    callback();
             } else {
                 var afterTransition = function () {
                     if (position) {
                         $this.togglePane(false);
                     }
+                    callback();
                 }
                 if (transition)
                     $this.tween(finalPos, afterTransition)
@@ -100,25 +109,52 @@
     $.fn.slidePane = function (options) {
         return this.each(function () {
             var $this = $(this).setPanePosition(options.from, null)
-                               .setPanePosition(options.to, true);
+                               .setPanePosition(options.to, true, options.callback);
         });
     };
 
+    $.paneTransitions = {
+        slideFrom: function (incomingPane, outgoingPane, options) {
+            $(incomingPane).slidePane({ from: options });
+            if (outgoingPane)
+                $(outgoingPane).slidePane({ to: oppositeDirection(options) });
+        },
+        coverFrom: function (incomingPane, outgoingPane, options) {
+            var outgoingZIndex = outgoingPane ? outgoingPane.style.zIndex || 0 : 0;
+            $(incomingPane).css({ zIndex: outgoingZIndex + 1 })
+                           .slidePane({
+                               from: options,
+                               callback: function () { $(outgoingPane).togglePane(false) }
+                           });
+        },
+        uncoverTo: function (incomingPane, outgoingPane, options) {
+            var incomingZIndex = incomingPane.style.zIndex || 0;
+            $(incomingPane).togglePane(true).setPanePosition();
+            $(outgoingPane).css({ zIndex: incomingZIndex + 1 }).slidePane({ to: options });
+        },
+        'default': function (incomingPane, outgoingPane, options) {
+            // No transition - just show instantly, and hide the previously active pane
+            $(incomingPane).togglePane(true).setPanePosition();
+            $(outgoingPane).togglePane(false);
+        }
+    };
+
     $.fn.showPane = function (options) {
+        options = options || {};
         return this.each(function () {
             var activePane = findFirstChildWithClass(this.parentNode, "active");
             if (activePane === this) // Already shown
                 return;
 
-            if (options && options.slideFrom) {
-                $(this).slidePane({ from: options.slideFrom });
-                if (activePane)
-                    $(activePane).slidePane({ to: oppositeDirection(options.slideFrom) });
-            } else {
-                // No transition - just show instantly, and hide the previously active pane
-                $(this).togglePane(true);
-                $(activePane).togglePane(false);
+            // Find and invoke the requested transition
+            var transitionToUse = 'default';
+            for (var transitionKey in $.paneTransitions) {
+                if ($.paneTransitions.hasOwnProperty(transitionKey) && options.hasOwnProperty(transitionKey)) {
+                    transitionToUse = transitionKey;
+                    break;
+                }
             }
+            $.paneTransitions[transitionKey](this, activePane, options[transitionKey]);
 
             // Keep track of which pane is active
             $(this).addClass("active");
