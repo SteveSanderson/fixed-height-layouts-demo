@@ -174,6 +174,10 @@
         return this;
     }
 
+    $.fn.clickOrTouch = function (handler) {
+        return this.on($.clickOrTouch, handler);
+    }
+
     // Create missing event shortcuts for IE version of XUI
     var shortcuts = ['click'];
     for (var i = 0; i < shortcuts.length; i++) {

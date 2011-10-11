@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link href="css/panes.css" rel="stylesheet" type="text/css" />
+        <link href="css/tablet.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            /* Pane configuration */
+            .left.col { width: 250px; }
+            .right.col { left: 250px; right: 0; }
+            .header.row { height: 75px; line-height: 75px; }
+            .body.row { top: 75px; bottom: 50px; }
+            .footer.row { height: 50px; bottom: 0; line-height: 50px; }
+            
+            /* Visual styles */
+            .secondLeft.pane, .logon.pane { padding: 1em; }
+        </style>
+    </head>
+    <body>
+        <div class="page">
+            <div class="main pane">
+                <div class="left col">
+                    <div class="header row">
+                        Navigation
+                    </div>
+                    <div class="body row">
+                        <div class="firstLeft pane scroll-y">
+                            <ul class="listview">
+                                <li class="selected">One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
+                                <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
+                                <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
+                                <li>One</li><li>Two</li><li>Three</li><li>One</li><li>Two</li><li>Three</li>
+                            </ul>
+                        </div>
+                        <div class="secondLeft pane scroll-y">
+                            You're on the second pane now.
+                            <button>Go back</button>
+                        </div>
+                    </div>
+                    <div class="footer row">
+                        <button class="logon">Log on</button>
+                    </div>
+                </div>
+                <div class="right col">
+                    <div class="header row">
+                        View or edit something
+                    </div>
+                    <div class="body row scroll-y">
+                        <div>
+                            <p>Click any item in the left-hand list to see a transition in that pane.</p>
+                            <p>Click "log on" in the footer to see a transition over the whole screen.</p>
+                        </div>
+                    </div>
+                    <div class="footer row">
+                        Some status text here
+                    </div>
+                </div>
+            </div>
+            <div class="logon pane">
+                This is the logon screen
+                <button>Go back</button>
+            </div>
+        </div>
+
+        <!--[if lt IE 9]><script src="script/xui-ie-2.2.0.min.js" type="text/javascript"></script><![endif]-->
+        <!--[if !(lt IE 9)]><!--><script src="script/xui-2.2.0.min.js" type="text/javascript"></script><!--<![endif]-->
+        <!--[if !IE]><!--><script src="script/iscroll.js" type="text/javascript"></script><!--<![endif]-->
+        <script src="script/iemobile-fix.js" type="text/javascript"></script>
+        <script src="script/panes.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            xui(".main.pane").showPane();
+            xui(".firstLeft.pane").showPane();
+
+            // Handle navigation on left pane
+            xui(".firstLeft.pane li").click(function () {
+                xui(".secondLeft.pane").showPane({ slideFrom: 'right' });
+            });
+            xui(".secondLeft.pane button").clickOrTouch(function () {
+                xui(".firstLeft.pane").showPane({ slideFrom: 'left' });
+            });
+
+            // Handle navigation to/from logon pane
+            xui("button.logon").clickOrTouch(function() {
+                xui(".logon.pane").showPane({ coverFrom: 'bottom' });
+            });
+            xui(".logon.pane button").clickOrTouch(function () {
+                xui(".main.pane").showPane({ uncoverTo: 'bottom' });
+            });
+
+            // Touch scrolling (for touch devices only)
+            xui(".scroll-x").touchScroll({ vScroll: false });
+            xui(".scroll-y").touchScroll({ hScroll: false });
+        </script>
+    </body>
+</html>
