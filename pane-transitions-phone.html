@@ -16,7 +16,7 @@
             body, .pane { color: White; background: #000; font-family: Segoe UI, Helvetica, Arial, Sans-Serif; }
             .first.pane, .second.pane, .top.row, .bottom.row { padding: 1em; }
             .header, .footer { padding: 0 1em; }
-            button { padding: 0.8em 1.3em; }
+            button { padding: 0.8em 1.3em; background-color: #ddd; border-radius: 5px; }
         </style>
 
     </head>
@@ -24,7 +24,7 @@
         <div class="page">
             <div class="main pane">
                 <div class="header row">
-                    <p><button>Header - click to transition everything</button></h2></p>
+                    <p><button>Header - click to transition everything</button></p>
                 </div>
                 <div class="body row">
                     <div class="first pane scroll-y">
@@ -58,25 +58,27 @@
         <script src="script/panes.js" type="text/javascript"></script>
 
         <script type="text/javascript">
-            // Initial pane visibility
-            xui(".main.pane").showPane();
-            xui(".first.pane").showPane();
+            (function ($, undefined) {
+                // Initial pane visibility
+                $(".main.pane").showPane();
+                $(".first.pane").showPane();
 
-            // Navigation within middle pane
-            xui(".first.pane button").clickOrTouch(function () {
-                xui(".second.pane").showPane({ slideFrom: 'right' });
-            });
-            xui(".second.pane button").clickOrTouch(function () {
-                xui(".first.pane").showPane({ slideFrom: 'left' });
-            });
+                // Navigation within middle pane
+                $(".first.pane button").clickOrTouch(function () {
+                    $(".second.pane").showPane({ slideFrom: 'right' });
+                });
+                $(".second.pane button").clickOrTouch(function () {
+                    $(".first.pane").showPane({ slideFrom: 'left' });
+                });
 
-            // Navigation of whole screen
-            xui(".header.row button").clickOrTouch(function () {
-                xui(".about.pane").showPane({ coverFrom: 'bottom' });
-            });
-            xui(".about.pane button").clickOrTouch(function () {
-                xui(".main.pane").showPane({ uncoverTo: 'bottom' });
-            });
+                // Navigation of whole screen
+                $(".header.row button").clickOrTouch(function () {
+                    $(".about.pane").showPane({ coverFrom: 'bottom' });
+                });
+                $(".about.pane button").clickOrTouch(function () {
+                    $(".main.pane").showPane({ uncoverTo: 'bottom' });
+                });
+            })(xui);
         </script>
     </body>
 </html>
