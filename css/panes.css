@@ -1,5 +1,5 @@
 ﻿/* Generic pane rules */
-body { margin: 0; }
+body { margin: 0; -webkit-text-size-adjust: 100%; }
 .page { left: 0; right: 0; top: 0; bottom: 0; }
 .row, .col, .page { overflow: hidden; position: absolute; }
 .row { left: 0; right: 0; }
