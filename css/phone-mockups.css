@@ -1,0 +1,26 @@
+﻿.handset, .tablet {
+    margin: auto; border: 2px solid black; border-radius: 40px; background: black;
+    position: relative; background: -webkit-gradient(radial, 1% 100%, 1, 1% 100%, 400, from(rgba(21, 21, 21, 1)), to(black));
+}
+.handset div, .tablet div {
+    border-radius: 40px; border: 3px solid silver; 
+    background: -webkit-gradient(linear, right top, -75 300, from(rgba(255, 255, 255, 0.4)), to(rgba(255, 255, 255, 0)), color-stop(0.5, rgba(255, 255, 255, 0.12)), color-stop(0.5, rgba(255, 255, 255, 0)));
+}
+.handset div:before {
+    content: ""; position: absolute; top: 47px; background: #555; left: 143px; right: 143px; height: 5px; border-radius: 2px;
+}
+.handset div:after, .tablet div:after {
+    bottom: 20px; content: ""; position: absolute; background: #050505; 
+    border-radius: 35px; background: -webkit-gradient(linear, right top, left bottom, color-stop(0%,#000), color-stop(80%,#222));
+}
+            
+.handset { width: 360px; }
+.handset div { padding: 85px 0;  }
+.handset div:after { left: 150px; right: 150px; height: 55px; }
+            
+.tablet { width: 640px; }
+.tablet div { padding: 60px 0;  }
+.tablet div:after { left: 300px; right: 300px; height: 35px; }
+            
+.handset iframe { width: 320px; height: 480px; margin: 0 20px; }
+.tablet iframe { width: 550px; height: 800px; margin: 0 40px; }
