@@ -67,13 +67,15 @@
         <!--[if !IE]><!-->
         <script src="script/iscroll.js" type="text/javascript"></script>
         <script type="text/javascript">
-            var xScrollers = document.getElementsByClassName("scroll-x");
-            for (var i = 0; i < xScrollers.length; i++)
-                new iScroll(xScrollers[i], { vScroll: false });
+            if (typeof document.body.style.webkitOverflowScrolling === "undefined") {
+                var xScrollers = document.getElementsByClassName("scroll-x");
+                for (var i = 0; i < xScrollers.length; i++)
+                    new iScroll(xScrollers[i], { vScroll: false });
 
-            var yScrollers = document.getElementsByClassName("scroll-y");
-            for (var i = 0; i < yScrollers.length; i++)
-                new iScroll(yScrollers[i], { hScroll: false });                
+                var yScrollers = document.getElementsByClassName("scroll-y");
+                for (var i = 0; i < yScrollers.length; i++)
+                    new iScroll(yScrollers[i], { hScroll: false });
+            }
         </script>
         <!--<![endif]-->
     </body>

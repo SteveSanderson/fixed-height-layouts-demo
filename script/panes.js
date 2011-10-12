@@ -166,10 +166,12 @@
     };
 
     $.fn.touchScroll = function (options) {
-        if ($.isTouch && (vendor === "webkit" || vendor === "Moz")) {
-            this.each(function () {
-                new iScroll(this, options);
-            });
+        if (typeof document.body.style.webkitOverflowScrolling === "undefined") { // Skip iOS 5, as it can do native touch scrolling
+            if ($.isTouch && (vendor === "webkit" || vendor === "Moz")) {         // Skip platforms not supported by iScroll
+                this.each(function () {
+                    new iScroll(this, options);
+                });
+            }
         }
         return this;
     }
