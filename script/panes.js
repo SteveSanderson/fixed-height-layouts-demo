@@ -7,7 +7,8 @@
     var vendor = (/webkit/i).test(navigator.appVersion) ? 'webkit' :
                  (/firefox/i).test(navigator.userAgent) ? 'Moz' :
                  'opera' in window ? 'O' : '',
-        useCssTransform = vendor + 'Transform' in document.documentElement.style,
+        isAndroid = (/android/gi).test(navigator.appVersion),
+        useCssTransform = (!isAndroid) && (vendor + 'Transform' in document.documentElement.style),
         cssTransformPrefix = "-" + vendor.toLowerCase() + "-",
         transitionEndEvent = vendor === 'webkit' ? 'webkitTransitionEnd' :
                              vendor === 'O' ? 'oTransitionEnd' :
