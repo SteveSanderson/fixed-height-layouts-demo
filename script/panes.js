@@ -12,10 +12,12 @@
         cssTransformPrefix = "-" + vendor.toLowerCase() + "-",
         transitionEndEvent = vendor === 'webkit' ? 'webkitTransitionEnd' :
                              vendor === 'O' ? 'oTransitionEnd' :
-                             'transitionend';
+                             'transitionend',
+        supportsCssTouchScroll = typeof document.body.style.webkitOverflowScrolling === "undefined"; // Currently only iOS 5 can do native touch scrolling
 
     $.isTouch = 'ontouchstart' in document.documentElement;
     $.clickOrTouch = $.isTouch ? "touchstart" : "click";
+    var supportsIScroll = $.isTouch && (vendor === "webkit" || vendor === "Moz");
 
     function oppositeDirection(direction) {
         switch (direction) {
@@ -167,8 +169,8 @@
     };
 
     $.fn.touchScroll = function (options) {
-        if (typeof document.body.style.webkitOverflowScrolling === "undefined") { // Skip iOS 5, as it can do native touch scrolling
-            if ($.isTouch && (vendor === "webkit" || vendor === "Moz")) {         // Skip platforms not supported by iScroll
+        if (supportsCssTouchScroll) {
+            if (supportsIScroll) {
                 this.each(function () {
                     new iScroll(this, options);
                 });
@@ -190,5 +192,5 @@
                 return this.on(eventName, handler);
             }
         }
-    }
+    }    
 })(x$, window);
