@@ -34,16 +34,16 @@
             <div id="location-continents" class="pane">
                 <h3>Continents</h3>
                 <ul>
-                    <li><a rel="america" href="#">America</a></li>
-                    <li><a rel="europe" href="#">Europe</a></li>
+                    <li><a href="#america">America</a></li>
+                    <li><a href="#europe">Europe</a></li>
                 </ul>
             </div>
 
             <div id="location-america" class="pane">
                 <h3>Countries in the Americas</h3>
                 <ul>
-                    <li><a rel="canada" href="#">Canada</a></li>
-                    <li><a rel="usa" href="#">USA</a></li>
+                    <li><a href="#canada">Canada</a></li>
+                    <li><a href="#usa">USA</a></li>
                 </ul>
             </div>
 
@@ -68,8 +68,8 @@
             <div id="location-europe" class="pane">
                 <h3>Countries in Europe</h3>
                 <ul>
-                    <li><a rel="italy" href="#">Italy</a></li>
-                    <li><a rel="uk" href="#">United Kingdom</a></li>
+                    <li><a href="#italy">Italy</a></li>
+                    <li><a href="#uk">United Kingdom</a></li>
                 </ul>
             </div>
 
@@ -110,8 +110,8 @@
                 });
 
                 $("a").click(function (evt) {
-                    var rel = (evt.srcElement || evt.target).rel;
-                    paneHistory.navigate({ location: rel });
+                    var dest = (evt.srcElement || evt.target).href.split("#")[1];
+                    paneHistory.navigate({ location: dest });
                     return false;
                 });
 
