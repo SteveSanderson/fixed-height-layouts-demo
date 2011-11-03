@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link href="css/panes.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">	
+            /* Specific pane configuration */
+            .header.row { height: 75px; background: #333; }
+            .body.row { top: 75px; bottom: 50px; background: #000; padding: 1em; }
+            .footer.row { height: 50px; bottom: 0; background: #333; }
+            .top.row { height: 50%; }
+            .bottom.row { height: 50%; bottom: 0; background-color: #333 }
+            
+            /* Visual styles */
+            body, .pane { color: White; background: #000; font-family: Segoe UI, Helvetica, Arial, Sans-Serif; }
+            .first.pane, .second.pane, .top.row, .bottom.row { padding: 1em; }
+            .header, .footer { padding: 0 1em; }
+            button { padding: 0.8em 1.3em; background-color: #ddd; border-radius: 5px; }
+            h3 { font-size: 2.4em; margin: 0.4em 1em 0 0.4em; font-weight: normal; }
+            li { font-size: 1.4em }
+            li a { color: white; text-decoration: none; display: block; }
+            li a:hover { text-decoration: underline }
+            li a:after { content: " >" }
+        </style>
+
+    </head>
+    <body>
+        <div class="header row">
+            <p><button class="goBack">&lt; Back</button></p>
+        </div>
+        <div class="body row">
+
+            <div id="location-continents" class="pane">
+                <h3>Continents</h3>
+                <ul>
+                    <li><a rel="america" href="#">America</a></li>
+                    <li><a rel="europe" href="#">Europe</a></li>
+                </ul>
+            </div>
+
+            <div id="location-america" class="pane">
+                <h3>Countries in the Americas</h3>
+                <ul>
+                    <li><a rel="canada" href="#">Canada</a></li>
+                    <li><a rel="usa" href="#">USA</a></li>
+                </ul>
+            </div>
+
+            <div id="location-canada" class="pane">
+                <h3>Cities in Canada</h3>
+                <ul>
+                    <li>Vancouver</li>
+                    <li>Toronto</li>
+                    <li>Edmonton</li>
+                </ul>
+            </div>
+
+            <div id="location-usa" class="pane">
+                <h3>Cities in USA</h3>
+                <ul>
+                    <li>Austin</li>
+                    <li>Seattle</li>
+                    <li>San Francisco</li>
+                </ul>
+            </div>
+
+            <div id="location-europe" class="pane">
+                <h3>Countries in Europe</h3>
+                <ul>
+                    <li><a rel="italy" href="#">Italy</a></li>
+                    <li><a rel="uk" href="#">United Kingdom</a></li>
+                </ul>
+            </div>
+
+            <div id="location-italy" class="pane">
+                <h3>Cities in Italy</h3>
+                <ul>
+                    <li>Verona</li>
+                    <li>Gerona</li>
+                    <li>Milan</li>
+                </ul>
+            </div>
+
+            <div id="location-uk" class="pane">
+                <h3>Cities in the United Kingdom</h3>
+                <ul>
+                    <li>Edinburgh</li>
+                    <li>Cambridge</li>
+                    <li>Grimesthorpe</li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="footer row">
+            <p>My footer. Could put icons here.</p>
+        </div>
+
+        <!--[if lt IE 9]><script src="script/xui-ie-2.2.0.min.js" type="text/javascript"></script><![endif]-->
+        <!--[if !(lt IE 9)]><!--><script src="script/xui-2.2.0.min.js" type="text/javascript"></script><!--<![endif]-->
+        <!--[if !IE]><!--><script src="script/iscroll.js" type="text/javascript"></script><!--<![endif]-->
+        <script src="script/iemobile-fix.js" type="text/javascript"></script>
+        <script src="script/native.history.js" type="text/javascript"></script>
+        <script src="script/panes.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            (function ($, undefined) {
+                // Navigation
+                var paneHistory = new PaneHistory();
+                paneHistory.navigate("location-continents");
+
+                $("a").click(function (evt) {
+                    var rel = (evt.srcElement || evt.target).rel;
+                    paneHistory.navigate("location-" + rel);
+                    return false;
+                });
+
+                $(".goBack").click(function () {
+                    paneHistory.back();
+                });
+            })(xui);
+        </script>
+    </body>
+</html>
