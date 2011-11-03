@@ -6,7 +6,9 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .col { top: 0; bottom: 0; }
 .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .scroll-y { overflow-y: auto; -webkit-overflow-scrolling: touch; }
-.pane { display: none; position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.fill, .pane { position: absolute; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100% }
+.pane { display: none; }
 
 /* Workaround: in landscape mode, IEMobile makes bottom toolbar overlap the page, so shorten the page by 75px to compensate */
+.iemobile .page { bottom: -6px; }
 @media screen and (orientation:landscape) { .iemobile .page { bottom: 75px; } }

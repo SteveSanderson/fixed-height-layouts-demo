@@ -91,8 +91,10 @@
                 });
 
                 // Touch scrolling (for touch devices only)
-                $(".scroll-x").touchScroll({ vScroll: false });
-                $(".scroll-y").touchScroll({ hScroll: false });
+                if ($.isTouch) {
+                    $(".scroll-x").touchScroll({ vScroll: false });
+                    $(".scroll-y").touchScroll({ hScroll: false });
+                }
             })(xui);
         </script>
     </body>
