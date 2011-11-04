@@ -53,6 +53,7 @@
             setTimeout(function () {
                 var location = findLocation(locationId);
                 callback({
+                    id: location.id,
                     name: location.name,
                     parent: findParent(locationId),
                     children: findLocations(location.childLocations)

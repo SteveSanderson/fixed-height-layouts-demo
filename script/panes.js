@@ -319,7 +319,13 @@
       return this.entries.slice(this.position + offset, this.position + offset + 1)[0];
     };
     PaneHistory.prototype.current = function() {
-      return this.relative(0);
+      return this.relative(0) || {
+        paneData: {},
+        paneIndex: void 0
+      };
+    };
+    PaneHistory.prototype.currentData = function() {
+      return this.current().paneData;
     };
     PaneHistory.prototype.refreshCurrent = function() {
       return this.current(this.relative(0) || {
@@ -414,15 +420,15 @@
           transition = forwardsEntry.transition;
         }
       }
-      onLoadedData = __bind(function(data) {
-        UrlLinkedPaneHistory.__super__.navigate.call(this, paneId, data, transition);
+      onLoadedData = __bind(function(data, transitionOverride) {
+        UrlLinkedPaneHistory.__super__.navigate.call(this, paneId, data, transitionOverride || transition);
         if (!isExternalNavigation) {
           return this.setCurrentUrlParams(params);
         }
       }, this);
       return setTimeout((__bind(function() {
         if (this.urlLinkOptions.loadPaneData) {
-          return this.urlLinkOptions.loadPaneData(params, onLoadedData);
+          return this.urlLinkOptions.loadPaneData.call(this, params, onLoadedData);
         } else {
           return onLoadedData(null);
         }

@@ -58,9 +58,14 @@
 
                 function AppViewModel() {
                     this.paneHistory = new UrlLinkedPaneHistory({
-                        entries: ko.observableArray([]),
                         params: { location: null },
+
+                        // Making the set of history entries observable, so we can dynamically generate corresponding DIVs
+                        entries: ko.observableArray([]),
+
+                        // Each time the visitor navigates forwards, this will be called to fetch data for the new pane
                         loadPaneData: function (params, callback) {
+                            // Here I'm loading data from some external source, asynchronously
                             locationInfoService.getLocationInfoAsync(params.location, callback);
                         }
                     });

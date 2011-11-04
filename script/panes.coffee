@@ -226,7 +226,9 @@ class window.PaneHistory
     relative: (offset) -> 
         @entries.slice(@position + offset, @position + offset + 1)[0]
 
-    current: -> @relative(0)
+    current: -> @relative(0) || { paneData: {}, paneIndex: undefined }
+
+    currentData: -> @current().paneData
 
     refreshCurrent: -> @current(@relative(0) || { paneData: {}, paneIndex: undefined })
 
@@ -296,8 +298,7 @@ class window.UrlLinkedPaneHistory extends window.PaneHistory
         if @relative(-1)?.paneId == paneId
             if isExternalNavigation
                 UrlLinkedPaneHistory.__super__.back.call(this, transition)
-            else
-                History.back() # Convert programmatic "back" to a real "back"
+            else                History.back() # Convert programmatic "back" to a real "back"				
             return
 
         # Is this a "forwards"? (If so, still load new data, but reuse its forwards transition)
@@ -307,15 +308,15 @@ class window.UrlLinkedPaneHistory extends window.PaneHistory
                 transition = forwardsEntry.transition
 
         # Load data and go forwards to it
-        onLoadedData = (data) =>
-            UrlLinkedPaneHistory.__super__.navigate.call(this, paneId, data, transition)
+        onLoadedData = (data, transitionOverride) =>
+            UrlLinkedPaneHistory.__super__.navigate.call(this, paneId, data, transitionOverride || transition)
             if !isExternalNavigation
                 @setCurrentUrlParams(params)
 
         # Force asynchrony to ensure consistency between the Ajax-load and immediate-load scenarios
         setTimeout ( =>
             if @urlLinkOptions.loadPaneData
-                @urlLinkOptions.loadPaneData(params, onLoadedData)
+                @urlLinkOptions.loadPaneData.call(this, params, onLoadedData)
             else
                 onLoadedData(null)
         ), 0
