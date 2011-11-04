@@ -26,7 +26,7 @@
     </head>
     <body>
         <div class="header row">
-            <p data-bind="with: paneHistory.current().paneData.parent">
+            <p data-bind="with: paneHistory.currentData().parent">
                 <button data-bind="click: $root.navigate">&lt; <span data-bind="text: name"></span></button>
             </p>
         </div>
