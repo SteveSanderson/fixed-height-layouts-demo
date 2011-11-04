@@ -71,9 +71,9 @@
                     });
 
                     this.navigate = function (evt) {
-                        var location = ko.dataFor(evt.srcElement || evt.target);
-                        if (location.childLocations.length)
-                            this.paneHistory.navigate({ location: location.id });
+                        var destination = ko.dataFor(evt.srcElement || evt.target);
+                        if (destination.childLocations.length)
+                            this.paneHistory.navigate({ location: destination.id });
                     } .bind(this);
                 };
 
